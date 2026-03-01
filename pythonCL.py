@@ -278,9 +278,7 @@ def demo_cli():
         print(f"❌ Error: {e}")
 
 
-# ══════════════════════════════════════════
-# ENTRY POINT
-# ══════════════════════════════════════════
+
 if __name__ == "__main__":
     import sys
 
@@ -295,6 +293,6 @@ if __name__ == "__main__":
 ║  GET  /api/health    (check status)   ║
 ╚═══════════════════════════════════════╝
         """)
-        app.run(host="0.0.0.0", port=5001, debug=True)
+        app.run(host="0.0.0.0", port=5000, debug=True)
 
 
