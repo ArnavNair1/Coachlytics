@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coach-Lytics — Decode Your Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- SCAN LINE OVERLAY -->
+  <div class="scanlines"></div>
+  <!-- GRID BG -->
+  <div class="grid-bg"></div>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar">
+    <div class="logo">
+      <svg class="logo-svg" viewBox="0 0 44 44" fill="none">
+        <path d="M3 34 Q11 8 22 20 Q33 32 41 6" stroke="#297FFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M3 40 Q13 16 24 27 Q35 40 43 12" stroke="#B8FF3A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.8"/>
+        <rect x="17" y="15" width="11" height="11" rx="2" stroke="#B8FF3A" stroke-width="1.8" fill="none"/>
+        <rect x="19.5" y="17.5" width="6" height="6" rx="1" fill="#297FFF" opacity="0.7"/>
+      </svg>
+      <span class="logo-text">COACH<span class="logo-accent">LYTICS</span></span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#" class="nav-active">Dashboard</a></li>
+      <li><a href="#">Goals</a></li>
+      <li><a href="#">Progress</a></li>
+      <li><a href="#">Playbook</a></li>
+    </ul>
+
+    <div class="nav-user">
+      <div class="status-dot"></div>
+      <div class="avatar">CM</div>
+      <div class="user-info">
+        <span class="user-name">Coach Mike</span>
+        <span class="user-role">Head Coach</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN LAYOUT ══ -->
+  <main class="layout">
+
+    <!-- ════ LEFT PANEL ════ -->
+    <section class="panel-left">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-tag">AI-POWERED TRAINING</div>
+        <h1 class="hero-title">Decode<br/><span class="hero-accent">Your Game.</span></h1>
+        <p class="hero-sub">Turn raw coaching advice into precision training plans — in seconds.</p>
+      </div>
+
+      <!-- INPUT CARD -->
+      <div class="card input-card">
+        <div class="card-label">
+          <span class="label-dot"></span>
+          Enter Your Coach's Advice
+        </div>
+        <textarea
+          id="coachAdvice"
+          class="advice-input"
+          placeholder="e.g. Work on first-step quickness, lateral shuffles, and explosive starts from a set position…"
+          maxlength="500"
+          oninput="updateCharCount(this)"
+        ></textarea>
+        <div class="input-footer">
+          <span class="char-count"><span id="charCount">0</span> / 500</span>
+          <button class="btn-generate" id="generateBtn" onclick="generatePlan()">
+            <span class="btn-glow"></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#111" stroke-width="2" stroke-linejoin="round" fill="#111"/></svg>
+            <span>Generate Plan</span>
+          </button>
+        </div>
+        <div class="gemini-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#297FFF"><circle cx="12" cy="12" r="10"/></svg>
+          Powered by Gemini AI
+        </div>
+      </div>
+
+      <!-- PLAN GRID -->
+      <div class="plan-grid" id="planGrid">
+        <div class="plan-card" id="focusCard">
+          <div class="plan-card-header">
+            <span class="plan-icon">🎯</span>
+            <span>Focus Area</span>
+          </div>
+          <div class="plan-card-body" id="focusArea">
+            <div class="empty-state">Awaiting generation…</div>
+          </div>
+        </div>
+
+        <div class="plan-card" id="trainingCard">
+          <div class="plan-card-header">
+            <span class="plan-icon">📋</span>
+            <span>Training Plan</span>
+          </div>
+          <ul class="drill-list" id="trainingPlan">
+            <li class="empty-state">—</li>
+          </ul>
+        </div>
+
+        <div class="plan-card" id="goalsCard">
+          <div class="plan-card-header">
+            <span class="plan-icon">🏆</span>
+            <span>Daily Goals</span>
+          </div>
+          <ul class="drill-list lime" id="dailyGoals">
+            <li class="empty-state">—</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ACTION STEPS -->
+      <div class="card action-card" id="actionCard">
+        <div class="section-header">
+          <div class="section-bar"></div>
+          <span class="plan-icon">✏️</span>
+          <span class="section-title">Action Steps</span>
+        </div>
+        <div class="steps-list" id="actionSteps">
+          <div class="empty-state centered">Generate a plan to see your action steps.</div>
+        </div>
+      </div>
+
+      <!-- MOTIVATIONAL BANNER -->
+      <div class="motivation-banner" id="motivationBanner">
+        <div class="motivation-track-img">
+          <div class="runner-silhouette">🏃</div>
+        </div>
+        <div class="motivation-text">
+          <div class="motivation-label">⚡ MOTIVATIONAL TIP</div>
+          <div class="motivation-quote" id="motivationQuote">Push hard through each drill. Every rep counts.</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════ RIGHT PANEL ════ -->
+    <aside class="panel-right">
+
+      <!-- PROGRESS TRACKER -->
+      <div class="card tracker-card">
+        <div class="card-title">
+          <span>📊</span> Progress Tracker
+        </div>
+        <div class="tracker-stats">
+          <div class="stat-block">
+            <div class="stat-label">Today's Workouts</div>
+            <div class="stat-value"><span class="stat-num blue">3</span><span class="stat-div">/</span><span class="stat-total">3</span> <span class="stat-unit">Completed</span></div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-block">
+            <div class="stat-label">This Week</div>
+            <div class="stat-value"><span class="stat-num lime">5</span><span class="stat-div">/</span><span class="stat-total">6</span> <span class="stat-unit">Sessions</span></div>
+          </div>
+        </div>
+
+        <!-- MINI CHART -->
+        <div class="chart-section">
+          <div class="chart-title">Performance Over Time</div>
+          <div class="chart-wrap">
+            <canvas id="perfChart" height="120"></canvas>
+          </div>
+          <div class="chart-days">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sun</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOADING STATE (hidden by default) -->
+      <div class="card loading-card" id="loadingCard" style="display:none;">
+        <div class="loading-inner">
+          <div class="loading-ring"></div>
+          <div class="loading-text">Decoding advice<span class="dot-animate">...</span></div>
+          <div class="loading-sub">Gemini AI is analyzing your coach's input</div>
+        </div>
+      </div>
+
+      <!-- COACH NOTES -->
+      <div class="card notes-card">
+        <div class="card-title">
+          <span>🏅</span> Coach's Notes
+        </div>
+        <div class="notes-body" id="coachNotes">
+          <p>Great job! Keep focused and stay consistent. Your dedication shows — push through the reps and trust the process.</p>
+        </div>
+      </div>
+
+      <!-- DRILL INTENSITY METER -->
+      <div class="card intensity-card">
+        <div class="card-title">
+          <span>🔥</span> Session Intensity
+        </div>
+        <div class="intensity-bars">
+          <div class="intensity-row">
+            <span>Speed</span>
+            <div class="bar-track"><div class="bar-fill blue" style="width:82%"></div></div>
+            <span class="bar-pct">82%</span>
+          </div>
+          <div class="intensity-row">
+            <span>Agility</span>
+            <div class="bar-track"><div class="bar-fill lime" style="width:67%"></div></div>
+            <span class="bar-pct">67%</span>
+          </div>
+          <div class="intensity-row">
+            <span>Endurance</span>
+            <div class="bar-track"><div class="bar-fill blue" style="width:55%"></div></div>
+            <span class="bar-pct">55%</span>
+          </div>
+          <div class="intensity-row" id="aiIntensityRow" style="display:none">
+            <span>AI Focus</span>
+            <div class="bar-track"><div class="bar-fill lime" id="aiBar" style="width:0%"></div></div>
+            <span class="bar-pct" id="aiBarPct">0%</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+  <script>initChart();</script>
+</body>
+</html>
